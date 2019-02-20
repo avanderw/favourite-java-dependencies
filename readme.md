@@ -1,9 +1,9 @@
 # favourite-java-dependencies
 
-| library                     | category |
-| --------------------------- | -------- |
-| [tinylog.org](#tinylog.org) | logging  |
-| [cucumber.io](#cucumber.io) | testing  |
+| library                    | category |
+| -------------------------- | -------- |
+| [tinylog.org](#tinylogorg) | logging  |
+| [cucumber.io](#cucumberio) | testing  |
 
 ## [tinylog.org](https://tinylog.org/)
 
