@@ -5,6 +5,7 @@
 | [tinylog.org](#tinylogorg)   | logging  |
 | [cucumber.io](#cucumberio)   | testing  |
 | [hamcrest.org](#hamcrestorg) | testing  |
+| [google/guice](#googleguice) | dependency injection |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -84,4 +85,23 @@ public class BiscuitTest {
     <version>2.1</version>
     <scope>test</scope>
 </dependency>
+```
+
+## [google/guice](https://github.com/google/guice/wiki/Motivation)
+
+```java
+public static void main(String[] args) {
+    Injector injector = Guice.createInjector(new BillingModule());
+    BillingService billingService = injector.getInstance(BillingService.class);
+    ...
+  }
+  
+```xml
+<dependency>
+	<groupId>com.google.inject</groupId>
+	<artifactId>guice</artifactId>
+	<version>4.2.0</version>
+</dependency>
+```
+
 ```
