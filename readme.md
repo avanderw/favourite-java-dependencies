@@ -6,6 +6,7 @@
 | [cucumber.io](#cucumberio)   | testing  |
 | [hamcrest.org](#hamcrestorg) | testing  |
 | [google/guice](#googleguice) | dependency injection |
+| [commons-math](#commonsmath) | math |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -95,7 +96,8 @@ public static void main(String[] args) {
     BillingService billingService = injector.getInstance(BillingService.class);
     ...
   }
-  
+```
+
 ```xml
 <dependency>
 	<groupId>com.google.inject</groupId>
@@ -104,4 +106,31 @@ public static void main(String[] args) {
 </dependency>
 ```
 
+## [commons-math](http://commons.apache.org/proper/commons-math/)
+
+```java
+// Get a DescriptiveStatistics instance
+DescriptiveStatistics stats = new DescriptiveStatistics();
+
+// Add the data from the array
+for( int i = 0; i < inputArray.length; i++) {
+        stats.addValue(inputArray[i]);
+}
+
+// Compute some statistics
+double mean = stats.getMean();
+double std = stats.getStandardDeviation();
+double median = stats.getPercentile(50);
 ```
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-math3</artifactId>
+    <version>3.6.1</version>
+</dependency>
+```
+
+
+
