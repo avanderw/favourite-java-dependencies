@@ -7,6 +7,7 @@
 | [hamcrest.org](#hamcrestorg)       | testing  |
 | [google/guice](#googleguice)       | dependency injection |
 | [square/javapoet](#squarejavapoet) | code-generation |
+| [commons-math](#commons-math)       | math |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -97,7 +98,7 @@ public static void main(String[] args) {
     ...
   }
 ```
-  
+
 ```xml
 <dependency>
 	<groupId>com.google.inject</groupId>
@@ -107,6 +108,7 @@ public static void main(String[] args) {
 ```
 
 ## [square/javapoet](https://github.com/square/javapoet)
+
 ```java
 MethodSpec today = MethodSpec.methodBuilder("today")
     .returns(Date.class)
@@ -145,3 +147,29 @@ public final class HelloWorld {
     <version>1.11.1</version>
 </dependency>
 ```
+
+## [commons-math](http://commons.apache.org/proper/commons-math/)
+
+```java
+// Get a DescriptiveStatistics instance
+DescriptiveStatistics stats = new DescriptiveStatistics();
+
+// Add the data from the array
+for( int i = 0; i < inputArray.length; i++) {
+        stats.addValue(inputArray[i]);
+}
+
+// Compute some statistics
+double mean = stats.getMean();
+double std = stats.getStandardDeviation();
+double median = stats.getPercentile(50);
+```
+
+```xml
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-math3</artifactId>
+    <version>3.6.1</version>
+</dependency>
+```
+
