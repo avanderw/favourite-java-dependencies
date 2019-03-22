@@ -1,13 +1,14 @@
 # favourite-java-dependencies
 
-| library                            | category |
-| ---------------------------------- | -------- |
-| [tinylog.org](#tinylogorg)         | logging  |
-| [cucumber.io](#cucumberio)         | testing  |
-| [hamcrest.org](#hamcrestorg)       | testing  |
-| [google/guice](#googleguice)       | dependency injection |
-| [square/javapoet](#squarejavapoet) | code-generation |
-| [commons-math](#commons-math)       | math |
+| library                                    | category |
+| ------------------------------------------ | -------- |
+| [tinylog.org](#tinylogorg)                 | logging |
+| [cucumber.io](#cucumberio)                 | testing |
+| [hamcrest.org](#hamcrestorg)               | testing |
+| [google/guice](#googleguice)               | dependency injection |
+| [square/javapoet](#squarejavapoet)         | code-generation |
+| [commons-math](#commons-math)              | math |
+| [ronmamo/reflections](#ronmamoreflections) | reflection |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -163,6 +164,15 @@ for( int i = 0; i < inputArray.length; i++) {
 double mean = stats.getMean();
 double std = stats.getStandardDeviation();
 double median = stats.getPercentile(50);
+
+// random sampling with distribution control
+List<Pair<Heart, Double>> hearts = new ArrayList<>();
+        hearts.add(new Pair<>(new Heart("bionic"), 0.4));
+        hearts.add(new Pair<>(new Heart("diamond"), 0.1));
+        hearts.add(new Pair<>(new Heart("cybernetic"), 0.3));
+        hearts.add(new Pair<>(new Heart("tissue"), 0.2));
+        EnumeratedDistribution<Heart> distribution = new EnumeratedDistribution<>(hearts);
+        return distribution.sample();
 ```
 
 ```xml
@@ -173,3 +183,63 @@ double median = stats.getPercentile(50);
 </dependency>
 ```
 
+## [ronmamo/reflections](https://github.com/ronmamo/reflections)
+
+```java
+//scan urls that contain 'my.package', include inputs starting with 'my.package', use the default scanners
+Reflections reflections = new Reflections("my.package");
+
+//or using ConfigurationBuilder
+new Reflections(new ConfigurationBuilder()
+     .setUrls(ClasspathHelper.forPackage("my.project.prefix"))
+     .setScanners(new SubTypesScanner(), 
+                  new TypeAnnotationsScanner().filterResultsBy(optionalFilter), ...),
+     .filterInputsBy(new FilterBuilder().includePackage("my.project.prefix"))
+     ...);
+	 
+//SubTypesScanner
+Set<Class<? extends Module>> modules = 
+    reflections.getSubTypesOf(com.google.inject.Module.class);
+	
+//TypeAnnotationsScanner 
+Set<Class<?>> singletons = 
+    reflections.getTypesAnnotatedWith(javax.inject.Singleton.class);
+	
+//ResourcesScanner
+Set<String> properties = 
+    reflections.getResources(Pattern.compile(".*\\.properties"));
+	
+//MethodAnnotationsScanner
+Set<Method> resources =
+    reflections.getMethodsAnnotatedWith(javax.ws.rs.Path.class);
+Set<Constructor> injectables = 
+    reflections.getConstructorsAnnotatedWith(javax.inject.Inject.class);
+	
+//FieldAnnotationsScanner
+Set<Field> ids = 
+    reflections.getFieldsAnnotatedWith(javax.persistence.Id.class);
+	
+//MethodParameterScanner
+Set<Method> someMethods =
+    reflections.getMethodsMatchParams(long.class, int.class);
+Set<Method> voidMethods =
+    reflections.getMethodsReturn(void.class);
+Set<Method> pathParamMethods =
+    reflections.getMethodsWithAnyParamAnnotated(PathParam.class);
+	
+//MethodParameterNamesScanner
+List<String> parameterNames = 
+    reflections.getMethodParamNames(Method.class)
+	
+//MemberUsageScanner
+Set<Member> usages = 
+    reflections.getMethodUsages(Method.class)
+```
+
+```xml
+<dependency>
+    <groupId>org.reflections</groupId>
+    <artifactId>reflections</artifactId>
+    <version>0.9.11</version>
+</dependency>
+```
