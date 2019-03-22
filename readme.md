@@ -1,11 +1,12 @@
 # favourite-java-dependencies
 
-| library                      | category |
-| ---------------------------- | -------- |
-| [tinylog.org](#tinylogorg)   | logging  |
-| [cucumber.io](#cucumberio)   | testing  |
-| [hamcrest.org](#hamcrestorg) | testing  |
-| [google/guice](#googleguice) | dependency injection |
+| library                            | category |
+| ---------------------------------- | -------- |
+| [tinylog.org](#tinylogorg)         | logging  |
+| [cucumber.io](#cucumberio)         | testing  |
+| [hamcrest.org](#hamcrestorg)       | testing  |
+| [google/guice](#googleguice)       | dependency injection |
+| [square/javapoet](#squarejavapoet) | code-generation |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -95,6 +96,7 @@ public static void main(String[] args) {
     BillingService billingService = injector.getInstance(BillingService.class);
     ...
   }
+```
   
 ```xml
 <dependency>
@@ -104,4 +106,42 @@ public static void main(String[] args) {
 </dependency>
 ```
 
+## [square/javapoet](https://github.com/square/javapoet)
+```java
+MethodSpec today = MethodSpec.methodBuilder("today")
+    .returns(Date.class)
+    .addStatement("return new $T()", Date.class)
+    .build();
+
+TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
+    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+    .addMethod(today)
+    .build();
+
+JavaFile javaFile = JavaFile.builder("com.example.helloworld", helloWorld)
+    .build();
+
+javaFile.writeTo(System.out);
+
+//
+// Generates
+//
+
+package com.example.helloworld;
+
+import java.util.Date;
+
+public final class HelloWorld {
+  Date today() {
+    return new Date();
+  }
+}
+```
+
+```xml
+<dependency>
+    <groupId>com.squareup</groupId>
+    <artifactId>javapoet</artifactId>
+    <version>1.11.1</version>
+</dependency>
 ```
