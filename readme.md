@@ -8,7 +8,8 @@
 | [google/guice](#googleguice)               | dependency injection |
 | [square/javapoet](#squarejavapoet)         | code-generation |
 | [commons-math](#commons-math)              | math |
-| [ronmamo/reflections](#ronmamoreflections) | reflection |
+| [ronmamo/reflections](#ronmamoreflections) | code-generation |
+| [remkop/picocli](#remkoppicocli)           | cli |
 
 ## [tinylog.org](https://tinylog.org/)
 
@@ -241,5 +242,47 @@ Set<Member> usages =
     <groupId>org.reflections</groupId>
     <artifactId>reflections</artifactId>
     <version>0.9.11</version>
+</dependency>
+```
+
+## [remkop/picocli](https://github.com/remkop/picocli)
+
+```java
+import picocli.CommandLine;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
+import java.io.File;
+
+@Command(name = "example", mixinStandardHelpOptions = true, version = "Picocli example 3.0")
+public class Example implements Runnable {
+    @Option(names = { "-v", "--verbose" }, description = "Verbose mode. Helpful for troubleshooting. " +
+                                                         "Multiple -v options increase the verbosity.")
+    private boolean[] verbose = new boolean[0];
+
+    @Parameters(arity = "1..*", paramLabel = "FILE", description = "File(s) to process.")
+    private File[] inputFiles;
+    
+    public void run() {
+        if (verbose.length > 0) {
+            System.out.println(inputFiles.length + " files to process...");
+        }
+        if (verbose.length > 1) {
+            for (File f : inputFiles) {
+                System.out.println(f.getAbsolutePath());
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        CommandLine.run(new Example(), args);
+    }
+}
+```
+
+```xml
+<dependency>
+  <groupId>info.picocli</groupId>
+  <artifactId>picocli</artifactId>
+  <version>3.9.5</version>
 </dependency>
 ```
